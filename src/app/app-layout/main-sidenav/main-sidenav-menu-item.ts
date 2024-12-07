@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 
-import { MenuHierarchy } from './app-layout.model';
+import { MenuHierarchy } from '../app-layout.model';
 
 @Component({
   selector: 'app-main-sidenav-menu-item',

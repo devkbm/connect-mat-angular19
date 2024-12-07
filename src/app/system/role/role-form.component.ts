@@ -15,52 +15,61 @@ import { MenuService } from '../menu/menu.service';
 import { MenuGroup } from '../menu/menu-group.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-role-form',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatGridListModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule,
   ],
   template: `
     {{fg.getRawValue() | json}} - {{fg.valid}}
 
     <form [formGroup]="fg">
       <div class="card-1">
-        <mat-form-field>
-          <mat-label for="roleCode" required>롤 코드</mat-label>
-          <input matInput id="roleCode" formControlName="roleCode" required>
-        </mat-form-field>
+        <mat-grid-list cols="1" rowHeight="64">
+          <mat-grid-tile>
+            <mat-form-field>
+              <mat-label for="roleCode" required>롤 코드</mat-label>
+              <input matInput id="roleCode" formControlName="roleCode" required>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <mat-form-field>
-          <mat-label for="roleName" required>롤 명</mat-label>
-          <input matInput id="roleName" formControlName="roleName" required>
-        </mat-form-field>
+          <mat-grid-tile>
+            <mat-form-field>
+              <mat-label for="roleName" required>롤 명</mat-label>
+              <input matInput id="roleName" formControlName="roleName" required>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <!--
-        <nz-form-item-custom for="menuGroupCode" label="메뉴그룹" required>
-          <nz-form-control nzHasFeedback [nzErrorTip]="errorTpl">
-            <nz-input-select required
-              formControlName="menuGroupCode" itemId="menuGroupCode"
-              [options]="menuGroupList" [opt_value]="'menuGroupCode'" [opt_label]="'menuGroupName'"
-              placeholder="Please select"
-            ></nz-input-select>
-          </nz-form-control>
-        </nz-form-item-custom>
+          <mat-grid-tile>
+            <mat-form-field>
+              <mat-label for="menuGroupCode" required>메뉴그룹</mat-label>
+              <mat-select id="menuGroupCode" formControlName="menuGroupCode">
+                @for (menuGroup of menuGroupList; track menuGroup) {
+                  <mat-option [value]="menuGroup.menuGroupCode">{{menuGroup.menuGroupName}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <nz-form-item-custom for="description" label="설명">
-          <nz-form-control>
-            <textarea nz-input id="description" formControlName="description"
-            placeholder="권한에 대한 설명을 입력해주세요." [rows]="10">
-            </textarea>
-          </nz-form-control>
-        </nz-form-item-custom>
-      -->
+          <mat-grid-tile>
+            <mat-form-field>
+              <mat-label for="description">롤 명</mat-label>
+              <textarea matInput id="description" formControlName="description"></textarea>
+            </mat-form-field>
+          </mat-grid-tile>
+
+        </mat-grid-list>
       </div>
+
     </form>
   `,
   styles: [`
@@ -160,6 +169,10 @@ import { MatInputModule } from '@angular/material/input';
         box-shadow: inset 0 0 20px rgba(115,115,115,0.75);
     }
 
+    mat-form-field {
+      text-align: left;
+    }
+
   `]
 })
 export class RoleFormComponent extends FormBase implements OnInit, AfterViewInit {
@@ -189,7 +202,10 @@ export class RoleFormComponent extends FormBase implements OnInit, AfterViewInit
   constructor() {
     super();
 
+    console.log(this.initLoadId());
+
     effect(() => {
+      console.log(this.initLoadId());
       if (this.initLoadId()) {
         this.get(this.initLoadId()!);
       }

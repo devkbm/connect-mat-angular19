@@ -5,10 +5,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
-import { AppLayoutService } from './app-layout.service';
-import { SessionManager } from '../core/session-manager';
-import { ResponseList } from '../core/model/response-list';
-import { MenuHierarchy } from './app-layout.model';
+import { SessionManager } from 'src/app/core/session-manager';
+import { ResponseList } from 'src/app/core/model/response-list';
+import { AppLayoutService } from '../app-layout.service';
+import { MenuHierarchy } from '../app-layout.model';
 
 import { MainSidenavMenuItemComponent } from './main-sidenav-menu-item';
 
@@ -30,7 +30,7 @@ import { MainSidenavMenuItemComponent } from './main-sidenav-menu-item';
       />
       <div class="header-text" [class.hide-header-text]="sideNavCollapsed()">
         <h2>Your channel </h2>
-        <p>sdsdf</p>
+        <p>name</p>
       </div>
     </div>
 

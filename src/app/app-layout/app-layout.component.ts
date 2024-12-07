@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CustomSidenavComponent } from "./sample/custom-sidenav.component";
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { MainSidenavComponent } from './main-sidenav.component';
+import { MainSidenavComponent } from './main-sidenav/main-sidenav.component';
 
 
 @Component({
@@ -41,15 +41,7 @@ import { MainSidenavComponent } from './main-sidenav.component';
 
     <mat-sidenav-container>
       <mat-sidenav mode="side" opened [style.width]="sidenavWidth()">
-        <!-- 샘플 테스트 -->
-        <!--
-        <app-custom-sidenav [collapsed]="collapsed()">
-        </app-custom-sidenav>
-        -->
-
-        <app-main-sidenav [collapsed]="collapsed()" [menuGroupCode]="this.menuGroupInfo.selectedId">
-        </app-main-sidenav>
-
+        <app-main-sidenav [collapsed]="collapsed()" [menuGroupCode]="this.menuGroupInfo.selectedId"></app-main-sidenav>
       </mat-sidenav>
 
       <mat-sidenav-content [style.margin-left]="sidenavWidth()">

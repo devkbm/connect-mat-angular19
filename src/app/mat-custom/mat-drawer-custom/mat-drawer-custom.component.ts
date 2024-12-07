@@ -1,41 +1,38 @@
-import { Component, effect, input, model, TemplateRef, viewChild } from '@angular/core';
-
-import { MatDrawerContainer, MatDrawer, MatDrawerContent } from '@angular/material/sidenav';
+import { ChangeDetectionStrategy, Component, input, TemplateRef, viewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-
-import { RoleFormComponent } from './role-form.component';
+import { MatDrawerContainer, MatDrawer, MatDrawerContent } from '@angular/material/sidenav';
+import { StringTemplateOutletDirective } from './string_template_outlet.directive';
 
 @Component({
-  selector: 'app-role-form-drawer',
+  selector: 'mat-drawer-custom',
   imports: [
     MatDrawerContainer,
     MatDrawer,
     MatDrawerContent,
     MatIcon,
-    RoleFormComponent,
+    StringTemplateOutletDirective
   ],
   template: `
-   <mat-drawer-container class="container" hasBackdrop="true">
+    <mat-drawer-container class="container" hasBackdrop="true">
       <mat-drawer #drawer
         mode="over"
         position="end"
         [style.width]="width()"
-        (openedChange)="visible.set($event)"
       >
         <mat-drawer-content class="inner-container">
           <div class="header">
-            <mat-icon class="close" (click)="this.visible.set(false)">close</mat-icon>
-            타이틀 {{initLoadId()}}
+            <mat-icon class="close" (click)="drawer.close()">close</mat-icon> {{title()}}
           </div>
 
           <div class="body">
-            <app-role-form [initLoadId]="initLoadId()"></app-role-form>
+            <ng-content select="[drawerContent]"></ng-content>
           </div>
 
-          <div class="footer">
-              Footer
-          </div>
-
+          @if (nzFooter()) {
+            <div class="footer">
+              <ng-container *stringTemplateOutlet="nzFooter()">{{ nzFooter() }}</ng-container>
+            </div>
+          }
         </mat-drawer-content>
 
       </mat-drawer>
@@ -60,7 +57,6 @@ import { RoleFormComponent } from './role-form.component';
 
     .header {
       //background-color: red;
-      height: 48px;
     }
 
     .body {
@@ -70,34 +66,24 @@ import { RoleFormComponent } from './role-form.component';
 
     .footer {
       //background-color: green;
-      height: 48px;
     }
 
     .mat-drawer-inner-container {
       display: flex;
       flex-direction: column;
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RoleFormDrawerComponent {
+export class MatDrawerCustomComponent {
   width = input('50%');
   title = input('');
-  initLoadId = input('');
-
-  visible = model(false);
 
   drawer = viewChild.required(MatDrawerContainer);
-  form = viewChild.required(RoleFormComponent);
+
+  nzFooter = input<string | TemplateRef<{}> | null>();
 
   constructor() {
-    effect(() => {
-      if (this.visible()) {
-        this.open();
-        //this.form().get(this.initLoadId());
-      } else {
-        this.close();
-      }
-    })
   }
 
   open() {

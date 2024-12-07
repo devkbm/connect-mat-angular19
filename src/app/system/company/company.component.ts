@@ -10,11 +10,6 @@ import { MatDrawerCustomComponent } from "./mat-drawer-custom.component";
   selector: 'app-company',
   imports: [
     CommonModule,
-    MatDrawerContainer,
-    MatToolbar,
-    MatIcon,
-    MatDrawer,
-    MatDrawerContent,
     DrawerContentComponent,
     MatDrawerCustomComponent
 ],
