@@ -2,26 +2,32 @@ import { Component } from '@angular/core';
 import { RoleFormDrawerComponent } from './role-form-drawer.component';
 import { RoleGridComponent } from "./role-grid.component";
 import { Role } from './role.model';
+import { ShapeComponent } from "../../core/app/shape.component";
 
 @Component({
   selector: 'app-role',
   imports: [
     RoleFormDrawerComponent,
-    RoleGridComponent
-  ],
+    RoleGridComponent,
+    ShapeComponent
+],
   template: `
     {{drawer.role.initLoadId}}
-    <app-role-form-drawer [(visible)]="drawer.role.visible" [initLoadId]="drawer.role.initLoadId" >
 
-      <div style="height: 500px">
+    <ng-template #header>
+      Title
+    </ng-template>
+
+    <app-shape [header]="header">
+      <app-role-form-drawer [(visible)]="drawer.role.visible" [initLoadId]="drawer.role.initLoadId">
+        asffassf
         <app-role-grid
           (editButtonClicked)="drawer.role.visible = true"
           (rowDoubleClicked)="drawer.role.visible = true"
           (rowClicked)="selectedItem($event)"
         />
-      </div>
-
-    </app-role-form-drawer>
+      </app-role-form-drawer>
+    </app-shape>
   `,
   styles: `
   `

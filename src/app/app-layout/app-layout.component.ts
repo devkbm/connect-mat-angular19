@@ -96,6 +96,7 @@ export class AppLayoutComponent implements OnInit {
 
   changeMenuGroup(val: string) {
     this.menuGroupInfo.selectedId = val;
+    sessionStorage.setItem('selectedMenuGroup', val);
 
     if (val) {
       const url = this.getSelectedMenuGroupUrl(val);

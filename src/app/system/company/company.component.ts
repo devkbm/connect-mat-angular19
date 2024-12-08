@@ -24,14 +24,11 @@ import { MatDrawerCustomComponent } from "./mat-drawer-custom.component";
       </h1>
       asfasf
     </ng-container>
-    <!--<app-drawer-content ></app-drawer-content>    -->
   </app-mat-drawer-custom>
 
   <ng-template #footerTpl>
     Footer Template
   </ng-template>
-
-
 
   <!--
     <mat-drawer-container
