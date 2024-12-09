@@ -2,3 +2,8 @@
 @import '../node_modules/ag-grid-community/styles/ag-grid.css';
 /* Quartz Theme Specific CSS */
 @import '../node_modules/ag-grid-community/styles/ag-theme-quartz.css';
+
+
+:root {
+  --main-header-height: 64px;           /* 메인 헤더 높이*/
+}

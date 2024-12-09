@@ -12,15 +12,13 @@ import { ShapeComponent } from "../../core/app/shape.component";
     ShapeComponent
 ],
   template: `
-    {{drawer.role.initLoadId}}
-
+    <!--{{drawer.role.initLoadId}}-->
     <ng-template #header>
-      Title
+      Title + {{drawer.role.initLoadId}}
     </ng-template>
 
-    <app-shape [header]="header">
-      <app-role-form-drawer [(visible)]="drawer.role.visible" [initLoadId]="drawer.role.initLoadId">
-        asffassf
+    <app-shape [header]="header" [headerHeight]="'40px'">
+      <app-role-form-drawer [(visible)]="drawer.role.visible" [initLoadId]="drawer.role.initLoadId" [excludingHeight]="'40px'">
         <app-role-grid
           (editButtonClicked)="drawer.role.visible = true"
           (rowDoubleClicked)="drawer.role.visible = true"

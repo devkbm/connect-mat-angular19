@@ -59,7 +59,7 @@ import { MainSidenavComponent } from './main-sidenav/main-sidenav.component';
     }
 
     mat-sidenav-container {
-      height: calc(100vh - 64px);
+      height: calc(100vh - var(--main-header-height));
     }
 
     mat-sidenav, mat-sidenav-content {

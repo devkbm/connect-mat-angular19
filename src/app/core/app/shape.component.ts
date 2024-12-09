@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, TemplateRef, inject, ElementRef, AfterViewInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, TemplateRef, inject, ElementRef, AfterViewInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   template: `
     @if (header() || headerString()) {
       <div class="header" [ngStyle]="{'height': headerHeight()}">
-        {{headerString()}}
+        <!--{{headerHeight()}} + {{bodyHeight()}}-->
         <ng-container [ngTemplateOutlet]="header()"></ng-container>
       </div>
     }
@@ -19,8 +19,8 @@ import { CommonModule } from '@angular/common';
         <ng-container [ngTemplateOutlet]="search()"></ng-container>
       </div>
     }
-
-    <div class="body">
+    <!-- [ngStyle]="{ 'height': 'calc(50% - ' + headerHeight() + 'px)' }"-->
+    <div class="body" >
       <ng-content></ng-content>
     </div>
 
@@ -32,7 +32,6 @@ import { CommonModule } from '@angular/common';
   `,
   styles: `
     :host {
-      height: 100%;
       display: flex;
       flex-direction: column;
     }
@@ -61,19 +60,20 @@ export class ShapeComponent implements AfterViewInit {
 
   header = input<TemplateRef<{}> | null>(null);
   headerString = input();
-  headerHeight = input('50px');
+  headerHeight = input('40px');
 
   search = input<TemplateRef<{}> | null>(null);
-  searchHeight = input('50px');
+  searchHeight = input('40px');
 
   footer = input<TemplateRef<{}> | null>(null);
-  footerHeight = input('50px');
+  footerHeight = input('40px');
 
-  private hostElement = inject(ElementRef);
+  //private hostElement = inject(ElementRef);
 
   constructor() {}
 
-  ngAfterViewInit(): void {   
-    console.log(this.hostElement.nativeElement.offsetHeight);
+  ngAfterViewInit(): void {
+    //console.log(this.hostElement.nativeElement);
+    //console.log(this.hostElement.nativeElement.offsetHeight);
   }
 }

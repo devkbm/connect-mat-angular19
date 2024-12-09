@@ -1,3 +1,4 @@
+
 import { Component, effect, input, model, TemplateRef, viewChild } from '@angular/core';
 
 import { MatDrawerContainer, MatDrawer, MatDrawerContent } from '@angular/material/sidenav';
@@ -15,7 +16,9 @@ import { RoleFormComponent } from './role-form.component';
     RoleFormComponent,
   ],
   template: `
-   <mat-drawer-container class="container" hasBackdrop="true">
+    <!-- 100vh - 메인헤더 높이 - 제외높이  -->
+    <!-- [style.height]="'calc(100vh - var(--main-header-height) - 100px)'" -->
+    <mat-drawer-container class="container" hasBackdrop="true" [style.height]="'calc(100vh - var(--main-header-height) - ' + excludingHeight() +')'">
       <mat-drawer #drawer
         mode="over"
         position="end"
@@ -24,32 +27,30 @@ import { RoleFormComponent } from './role-form.component';
       >
         <mat-drawer-content class="inner-container">
           <div class="header">
-            <mat-icon class="close" (click)="this.visible.set(false)">close</mat-icon>
+            <mat-icon (click)="this.visible.set(false)">close</mat-icon>
             타이틀 {{initLoadId()}}
           </div>
 
           <div class="body">
-            <app-role-form [initLoadId]="initLoadId()"></app-role-form>
+            <app-role-form></app-role-form>
           </div>
 
           <div class="footer">
               Footer
           </div>
-
         </mat-drawer-content>
-
       </mat-drawer>
 
       <!-- MAIN CONTENT -->
       <mat-drawer-content>
         <ng-content></ng-content>
       </mat-drawer-content>
-
     </mat-drawer-container>
   `,
   styles: `
     .container {
-      height: calc(100vh - 64px);
+      //height: calc(100vh - var(--main-header-height) - 40px);
+      background-color: yellow;
     }
 
     .inner-container {
@@ -65,7 +66,7 @@ import { RoleFormComponent } from './role-form.component';
 
     .body {
       flex: 1;
-      //background-color: blue;
+      --background-color: blue;
     }
 
     .footer {
@@ -73,16 +74,14 @@ import { RoleFormComponent } from './role-form.component';
       height: 48px;
     }
 
-    .mat-drawer-inner-container {
-      display: flex;
-      flex-direction: column;
-    }
   `
 })
 export class RoleFormDrawerComponent {
   width = input('50%');
   title = input('');
   initLoadId = input('');
+
+  excludingHeight = input('0px');
 
   visible = model(false);
 
@@ -93,7 +92,7 @@ export class RoleFormDrawerComponent {
     effect(() => {
       if (this.visible()) {
         this.open();
-        //this.form().get(this.initLoadId());
+        this.form().get(this.initLoadId());
       } else {
         this.close();
       }
