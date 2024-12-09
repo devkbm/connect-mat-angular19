@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, TemplateRef, inject, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -57,7 +57,7 @@ import { CommonModule } from '@angular/common';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShapeComponent {
+export class ShapeComponent implements AfterViewInit {
 
   header = input<TemplateRef<{}> | null>(null);
   headerString = input();
@@ -69,5 +69,11 @@ export class ShapeComponent {
   footer = input<TemplateRef<{}> | null>(null);
   footerHeight = input('50px');
 
+  private hostElement = inject(ElementRef);
+
   constructor() {}
+
+  ngAfterViewInit(): void {   
+    console.log(this.hostElement.nativeElement.offsetHeight);
+  }
 }
