@@ -7,16 +7,15 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
   template: `
-    @if (header() || headerString()) {
-      <div class="header" [ngStyle]="{'height': headerHeight()}">
-        <!--{{headerHeight()}} + {{bodyHeight()}}-->
-        <ng-container [ngTemplateOutlet]="header()"></ng-container>
+    @if (header().template) {
+      <div class="header" [ngStyle]="{'height': header().height}">
+        <ng-container [ngTemplateOutlet]="header().template"></ng-container>
       </div>
     }
 
-    @if (search()) {
-      <div [ngStyle]="{'height': searchHeight()}">
-        <ng-container [ngTemplateOutlet]="search()"></ng-container>
+    @if (search().template) {
+      <div [ngStyle]="{'height': search().height}">
+        <ng-container [ngTemplateOutlet]="search().template"></ng-container>
       </div>
     }
     <!-- [ngStyle]="{ 'height': 'calc(50% - ' + headerHeight() + 'px)' }"-->
@@ -24,9 +23,9 @@ import { CommonModule } from '@angular/common';
       <ng-content></ng-content>
     </div>
 
-    @if (footer()) {
-      <div class="footer" [ngStyle]="{'height': footerHeight()}">
-        <ng-container [ngTemplateOutlet]="footer()"></ng-container>
+    @if (footer().template) {
+      <div class="footer" [ngStyle]="{'height': footer().height}">
+        <ng-container [ngTemplateOutlet]="footer().template"></ng-container>
       </div>
     }
   `,
@@ -34,39 +33,41 @@ import { CommonModule } from '@angular/common';
     :host {
       display: flex;
       flex-direction: column;
+      height: 100%;
     }
 
     .header {
-      background-color: red;
+      //background-color: red;
     }
 
     .search {
-      background-color: yellow;
+      //background-color: yellow;
     }
 
     .body {
       flex: 1;
-      background-color: blue;
+      //background-color: blue;
     }
 
     .footer {
-      height: 50px;
-      background-color: green;
+      //background-color: green;
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShapeComponent implements AfterViewInit {
 
-  header = input<TemplateRef<{}> | null>(null);
-  headerString = input();
-  headerHeight = input('40px');
+  header = input<{template: TemplateRef<{}> | null, height: string | null}>({
+    template: null, height: '0px'
+  });
 
-  search = input<TemplateRef<{}> | null>(null);
-  searchHeight = input('40px');
+  search = input<{template: TemplateRef<{}> | null, height: string | null}>({
+    template: null, height: '0px'
+  });
 
-  footer = input<TemplateRef<{}> | null>(null);
-  footerHeight = input('40px');
+  footer = input<{template: TemplateRef<{}> | null, height: string | null}>({
+    template: null, height: '0px'
+  });
 
   //private hostElement = inject(ElementRef);
 

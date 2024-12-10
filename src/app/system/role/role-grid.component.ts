@@ -4,21 +4,21 @@ import { AgGridModule } from 'ag-grid-angular';
 import { Component, OnInit, inject, output } from '@angular/core';
 
 import { AppAlarmService } from 'src/app/core/service/app-alarm.service';
-import { AggridFunction } from 'src/app/third-party/ag-grid/aggrid-function';
 import { ResponseList } from 'src/app/core/model/response-list';
 
 import { RoleService } from './role.service';
 import { Role } from './role.model';
 import { ButtonRendererComponent } from 'src/app/third-party/ag-grid/renderer/button-renderer.component';
+
 import { RowSelectionOptions } from 'ag-grid-community';
+import { ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'app-role-grid',
-  standalone: true,
   imports: [ CommonModule, AgGridModule ],
   template: `
     <ag-grid-angular
-      [ngStyle]="style"
+      [style.height]="'100%'"
       class="ag-theme-quartz"
       [rowSelection]="rowSelection"
       [rowData]="roleList"
@@ -41,7 +41,7 @@ import { RowSelectionOptions } from 'ag-grid-community';
     :host::ng-deep .header-right .ag-header-cell-label { flex-direction: row-reverse; }
   `]
 })
-export class RoleGridComponent extends AggridFunction implements OnInit {
+export class RoleGridComponent implements OnInit {
 
   roleList: Role[] = [];
 
@@ -55,11 +55,17 @@ export class RoleGridComponent extends AggridFunction implements OnInit {
     enableClickSelection: true
   };
 
+  gridApi: any;
+  gridColumnApi: any;
+  getRowId: any;
+
+  columnDefs: ColDef[] = [];
+  defaultColDef:ColDef = { resizable: true, sortable: true };
+
   private service = inject(RoleService);
   private appAlarmService = inject(AppAlarmService);
 
   ngOnInit() {
-    this.defaultColDef = { resizable: true, sortable: true };
 
     this.columnDefs = [
         {
@@ -116,6 +122,11 @@ export class RoleGridComponent extends AggridFunction implements OnInit {
     };
 
     this.getList();
+  }
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
   }
 
   getList(params?: any): void {

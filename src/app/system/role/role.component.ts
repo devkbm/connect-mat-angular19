@@ -17,15 +17,19 @@ import { ShapeComponent } from "../../core/app/shape.component";
       Title + {{drawer.role.initLoadId}}
     </ng-template>
 
-    <app-shape [header]="header" [headerHeight]="'40px'">
-      <app-role-form-drawer [(visible)]="drawer.role.visible" [initLoadId]="drawer.role.initLoadId" [excludingHeight]="'40px'">
+    <ng-template #search>
+      Search
+    </ng-template>
+
+    <app-role-form-drawer [(visible)]="drawer.role.visible" [initLoadId]="drawer.role.initLoadId">
+      <app-shape [header]="{template: header, height: '40px'}" [search]="{template: search, height: '40px'}">
         <app-role-grid
           (editButtonClicked)="drawer.role.visible = true"
           (rowDoubleClicked)="drawer.role.visible = true"
           (rowClicked)="selectedItem($event)"
         />
-      </app-role-form-drawer>
-    </app-shape>
+      </app-shape>
+    </app-role-form-drawer>
   `,
   styles: `
   `
