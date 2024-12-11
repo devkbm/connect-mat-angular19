@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { RoleFormDrawerComponent } from './role-form-drawer.component';
 import { RoleGridComponent } from "./role-grid.component";
 import { Role } from './role.model';
@@ -21,7 +21,7 @@ import { ShapeComponent } from "../../core/app/shape.component";
       Search
     </ng-template>
 
-    <app-role-form-drawer [(visible)]="drawer.role.visible" [initLoadId]="drawer.role.initLoadId">
+    <app-role-form-drawer [(visible)]="drawer.role.visible" [formLoadId]="drawer.role.initLoadId" (drawerClosed)="loadGrid()">
       <app-shape [header]="{template: header, height: '40px'}" [search]="{template: search, height: '40px'}">
         <app-role-grid
           (editButtonClicked)="drawer.role.visible = true"
@@ -42,12 +42,18 @@ export class RoleComponent {
     role: { visible: false, initLoadId: '' }
   }
 
+  grid = viewChild.required(RoleGridComponent);
+
   selectedItem(data: Role) {
     if (data) {
       this.drawer.role.initLoadId = data.roleCode;
     } else {
       this.drawer.role.initLoadId = null;
     }
+  }
+
+  loadGrid() {
+    this.grid().getList();
   }
 
 }

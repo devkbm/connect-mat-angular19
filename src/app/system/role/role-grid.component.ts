@@ -95,18 +95,19 @@ export class RoleGridComponent implements OnInit {
           headerClass: 'header-center',
           field: 'roleCode',
           suppressSizeToFit: true,
-          width: 100
+          width: 120
         },
         {
           headerName: '롤명',
           headerClass: 'header-center',
           field: 'roleName',
           suppressSizeToFit: true,
-          width: 100
+          width: 150
         },
         {
           headerName: '설명',
-          field: 'description'
+          field: 'description',
+          width: 200
         },
         {
           headerName: '메뉴그룹코드',
