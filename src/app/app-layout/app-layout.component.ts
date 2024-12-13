@@ -55,7 +55,8 @@ import { MainSidenavComponent } from './main-sidenav/main-sidenav.component';
       position: relative;
       z-index: 5;
       //position:fixed;
-      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+      //box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+      box-shadow: var(--mat-sys-level2);
     }
 
     mat-sidenav-container {
