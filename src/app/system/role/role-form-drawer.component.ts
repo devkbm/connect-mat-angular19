@@ -32,6 +32,26 @@ import { RoleFormComponent } from './role-form.component';
         [style.width]="width()"
         (openedChange)="visible.set($event)"
       >
+        <div class="drawer-container">
+        <div class="header">
+            <mat-icon (click)="this.visible.set(false)">close</mat-icon>
+            타이틀 {{formLoadId()}}
+          </div>
+
+          <div class="body">
+            <app-role-form
+              (formSaved)="formChanged()"
+              (formDeleted)="formChanged()">
+            </app-role-form>
+          </div>
+
+          <div class="footer">
+            <button mat-raised-button (click)="save()"><mat-icon>save</mat-icon>저장</button>
+            <button mat-raised-button (click)="delete()"><mat-icon>delete</mat-icon>삭제</button>
+            <button mat-raised-button (click)="close()"><mat-icon>close</mat-icon>닫기</button>
+          </div>
+          </div>
+          <!--
         <mat-drawer-content class="drawer-container">
           <div class="header">
             <mat-icon (click)="this.visible.set(false)">close</mat-icon>
@@ -51,6 +71,7 @@ import { RoleFormComponent } from './role-form.component';
             <button mat-raised-button (click)="close()"><mat-icon>close</mat-icon>닫기</button>
           </div>
         </mat-drawer-content>
+-->
       </mat-drawer>
     </mat-drawer-container>
   `,
@@ -62,6 +83,7 @@ import { RoleFormComponent } from './role-form.component';
       background-color: skyblue;
       display: flex;
       flex-direction: column;
+      height:100%;
     }
 
     .header {

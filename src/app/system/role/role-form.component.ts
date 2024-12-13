@@ -213,7 +213,7 @@ export class RoleFormComponent implements OnInit, AfterViewInit {
   }
 
   focusInput() {
-    this.renderer.selectRootElement('#roleCode').focus();
+    //this.renderer.selectRootElement('#roleCode').focus();
   }
 
   newForm(): void {
