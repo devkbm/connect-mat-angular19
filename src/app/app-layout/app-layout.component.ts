@@ -51,6 +51,8 @@ import { MainSidenavComponent } from './main-sidenav/main-sidenav.component';
     </mat-sidenav-container>
   `,
   styles: `
+    @use '@angular/material' as mat;
+
     mat-toolbar {
       position: relative;
       z-index: 5;
@@ -67,6 +69,13 @@ import { MainSidenavComponent } from './main-sidenav/main-sidenav.component';
       transition: all 500ms ease-in-out;
     }
 
+    mat-sidenav {
+      @include mat.sidenav-overrides((
+        container-divider-color: rgba(0, 0, 0, 0.1),
+        container-shape: 0px,
+        container-background-color: white,
+      ));
+    }
   `
 })
 export class AppLayoutComponent implements OnInit {

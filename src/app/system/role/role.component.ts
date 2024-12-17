@@ -1,10 +1,12 @@
-import { Component, viewChild } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { RoleFormDrawerComponent } from './role-form-drawer.component';
 import { RoleGridComponent } from "./role-grid.component";
 import { Role } from './role.model';
 import { ShapeComponent } from "../../core/app/shape.component";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { RoleService } from './role.service';
+import { ResponseObject } from 'src/app/core/model/response-object';
 
 @Component({
   selector: 'app-role',
@@ -22,7 +24,9 @@ import { MatIcon } from '@angular/material/icon';
     </ng-template>
 
     <ng-template #search>
+      <button mat-raised-button (click)="loadGrid()"><mat-icon>search</mat-icon>조회</button>
       <button mat-raised-button (click)="newItem()"><mat-icon>save</mat-icon>신규</button>
+      <button mat-raised-button (click)="deleteItem()"><mat-icon>delete</mat-icon>삭제</button>
     </ng-template>
 
     <app-role-form-drawer [(visible)]="drawer.role.visible" [formLoadId]="drawer.role.initLoadId" (drawerClosed)="loadGrid()">
@@ -60,6 +64,8 @@ export class RoleComponent {
 
   grid = viewChild.required(RoleGridComponent);
 
+  private service = inject(RoleService);
+
   selectedItem(data: Role) {
     if (data) {
       this.drawer.role.initLoadId = data.roleCode;
@@ -75,5 +81,17 @@ export class RoleComponent {
   newItem() {
     this.drawer.role.initLoadId = null;
     this.drawer.role.visible = true;
+  }
+
+  deleteItem() {
+    const id = this.drawer.role.initLoadId;
+
+    this.service
+        .deleteRole(id)
+        .subscribe(
+          (model: ResponseObject<Role>) => {
+            this.loadGrid();
+          }
+        );
   }
 }

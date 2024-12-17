@@ -61,19 +61,36 @@ import { MenuHierarchy } from '../app-layout.model';
 
   `,
   styles: `
+    @use '@angular/material' as mat;
+
     :host * {
       transition: all 500ms ease-in-out;
     }
 
     .menu-item {
-      //border-left: 5px solid;
+      border-left: 5px solid;
       border-left-color: rgba(0, 0, 0, 0);
+
+      @include mat.list-overrides((
+        active-indicator-shape: 0px,
+        active-indicator-color: rgba(0,0,0,0.1),
+        list-item-one-line-container-height: 56px
+      ));
     }
 
     .selected-menu-item {
       border-left-color: var(--primary-color);
       //border-left-color: rgba(0, 0, 0, 0.05);
+
+      @include mat.list-overrides((
+        list-item-leading-icon-color: var(--primary-color),
+        list-item-hover-leading-icon-color: var(--primary-color),
+        list-item-label-text-color: var(--primary-color),
+        list-item-focus-label-text-color: var(--primary-color),
+        list-item-hover-label-text-color: var(--primary-color),
+      ));
     }
+
   `
 })
 export class MainSidenavMenuItemComponent {
